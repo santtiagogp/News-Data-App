@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'ui/utils/app_routes.dart';
+import 'ui/utils/app_theme.dart';
+
 void main() {
   runApp(const MainApp());
 }
@@ -9,13 +12,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text('News Data App!'),
-        ),
-      ),
+      initialRoute: 'home',
+      theme: NewsTheme.appTheme,
+      routes: appRoutes,
     );
   }
 }
