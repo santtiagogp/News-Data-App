@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../saved/saved_screen.dart';
+import '../search/search_screen.dart';
+import '../settings/settings_screen.dart';
+
 class HomeScreen extends StatelessWidget {
 
   const HomeScreen({super.key});
@@ -12,7 +16,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: PageView(
         children: const [
-          _LastestNews()
+          _LastestNews(),
+          SearchScreen(),
+          SavedScreen(),
+          SettingsScreen()
         ],
       ),
       bottomNavigationBar: NavigationBar(
