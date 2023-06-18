@@ -5,6 +5,7 @@ import '../saved/saved_screen.dart';
 import '../search/search_screen.dart';
 import '../settings/settings_screen.dart';
 import 'cubit/navigation_cubit.dart';
+import 'widgets/home_navbar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
 
     final cubit = BlocProvider.of<NavigationCubit>(context, listen: true);
 
-    var controller = PageController(
+    PageController controller = PageController(
       initialPage: cubit.currentIndex
     );
 
@@ -30,22 +31,18 @@ class HomeScreen extends StatelessWidget {
           SettingsScreen()
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-        selectedIndex: controller.initialPage,
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
-          NavigationDestination(icon: Icon(Icons.bookmark_border), label: 'Saved'),
-          NavigationDestination(icon: Icon(Icons.settings_outlined), label: 'Settings'),
-        ],
+      bottomNavigationBar: HomeNavbar(
+        controller: controller,
         onDestinationSelected: (index) {
+
           cubit.changeIndex(index);
+
           controller.animateToPage(
             cubit.currentIndex,
-            duration: const Duration( milliseconds: 250 ),
+            duration: const Duration( milliseconds: 300 ),
             curve: Curves.easeIn
           );
+
         },
       ),
     );

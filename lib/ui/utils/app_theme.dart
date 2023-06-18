@@ -5,7 +5,10 @@ class NewsTheme {
   static final ThemeData appTheme = ThemeData(
     useMaterial3: true,
     primaryColor: Colors.orange,
-    brightness: Brightness.light
+    brightness: Brightness.light,
+    navigationBarTheme: NavigationBarThemeData(
+      indicatorColor: Colors.orange[200]
+    )
   );
 
 }
