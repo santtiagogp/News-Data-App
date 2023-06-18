@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'ui/screens/home/cubit/navigation_cubit.dart';
 import 'ui/utils/app_routes.dart';
 import 'ui/utils/app_theme.dart';
 
@@ -12,11 +14,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: 'home',
-      theme: NewsTheme.appTheme,
-      routes: appRoutes,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => NavigationCubit())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: 'home',
+        theme: NewsTheme.appTheme,
+        routes: appRoutes,
+      ),
     );
   }
 }
