@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'widgets/news_tile.dart';
 
 import '../saved/saved_screen.dart';
 import '../search/search_screen.dart';
@@ -54,9 +55,41 @@ class _LastestNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Main page'),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        title: const Text('News App'),
+      ),
+
+      body: SizedBox.expand(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              
+              const SizedBox( height: 30, ),
+        
+              Container(
+                width: 310,
+                height: 200,
+                color: Colors.orangeAccent,
+              ),
+              
+              const Column(
+                children: [
+                  NewsTile(),
+                  NewsTile(),
+                  NewsTile(),
+                  NewsTile(),
+                  NewsTile(),
+                  NewsTile(),
+                  NewsTile(),
+                  NewsTile(),
+                ],
+              )
+              
+            ],
+          ),
+        ),
       ),
     );
   }
