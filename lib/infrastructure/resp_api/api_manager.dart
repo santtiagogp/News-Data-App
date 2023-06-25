@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 class ApiManager {
 
   final Map<String, String> headers = {
-    'Content-Type': 'application/json; charset=UTF-8'
+    'Content-Type': 'application/json; charset=UTF-8',
+    'X-ACCESS-KEY' : NewsApi.newsApiKey
   };
 
   Future<dynamic> get( String endpoint ) async {
