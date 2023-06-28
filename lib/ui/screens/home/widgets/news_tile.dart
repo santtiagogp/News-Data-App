@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
 class NewsTile extends StatelessWidget {
-  const NewsTile({super.key});
+  const NewsTile({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.imgUrl
+  });
+
+  final String title;
+  final String description;
+  final String imgUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +22,19 @@ class NewsTile extends StatelessWidget {
       ),
       child: Container(
         padding: const EdgeInsets.all(20),
-        child: const Row(
+        child: Row(
           children: [
       
             SizedBox(
-              height: 150,
-              width: 150,
-              child: Placeholder(),
+              height: 130,
+              width: 130,
+              child: Image(
+                fit: BoxFit.cover,
+                image: NetworkImage(imgUrl,),
+              ),
             ),
 
-            SizedBox( width: 20, ),
+            const SizedBox( width: 20, ),
       
             Expanded(
               child: Column(
@@ -31,22 +43,22 @@ class NewsTile extends StatelessWidget {
                 children: [
             
                   Text(
-                    'Title',
-                    style: TextStyle( fontSize: 20, fontWeight: FontWeight.w600 ),
+                    '${title.substring(0, 23)}...',
+                    style: const TextStyle( fontSize: 20, fontWeight: FontWeight.w600 ),
                   ),
 
                   Text(
-                    'Laboris mollit pariatur aliqua minim. Dolor est nostrud ex irure pariatur. In aute nostrud est duis. Do anim adipisicing sint irure in quis amet consequat.',
-                    style: TextStyle(
+                    description,
+                    style: const TextStyle(
                       overflow: TextOverflow.ellipsis,
                       fontSize: 13
                     ),
                     maxLines: 5,
                   ),
 
-                  SizedBox( height: 20 ),
+                  const SizedBox( height: 20 ),
             
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
             

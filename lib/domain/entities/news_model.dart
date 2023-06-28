@@ -1,13 +1,13 @@
 class News {
     final String title;
     final String link;
-    final List<String>? keywords;
-    final List<String>? creator;
+    final List<String> keywords;
+    final List<String> creator;
     final dynamic videoUrl;
     final String description;
     final String content;
     final DateTime pubDate;
-    final String? imageUrl;
+    final String imageUrl;
     final String sourceId;
     final List<String> country;
     final String language;

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../domain/use_cases/news_use_cases.dart';
+import 'home_bloc/home_bloc.dart';
 
 import '../saved/saved_screen.dart';
 import '../search/search_screen.dart';
@@ -10,19 +12,35 @@ import 'widgets/home_navbar.dart';
 import 'widgets/news_tile.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.useCases});
 
   static const String screenName = 'home';
+  final NewsUseCases useCases;
 
   @override
   Widget build(BuildContext context) {
-
     final cubit = BlocProvider.of<NavigationCubit>(context, listen: true);
 
-    PageController controller = PageController(
-      initialPage: cubit.currentIndex
-    );
+    PageController controller = PageController(initialPage: cubit.currentIndex);
 
+    return BlocProvider(
+      create: (_) => HomeBloc(useCases)..add(LoadDataEvent()),
+      child: _HomePageHeader(controller: controller, cubit: cubit),
+    );
+  }
+}
+
+class _HomePageHeader extends StatelessWidget {
+  const _HomePageHeader({
+    required this.controller,
+    required this.cubit,
+  });
+
+  final PageController controller;
+  final NavigationCubit cubit;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
         controller: controller,
@@ -36,15 +54,11 @@ class HomeScreen extends StatelessWidget {
       bottomNavigationBar: HomeNavbar(
         controller: controller,
         onDestinationSelected: (index) {
-
           cubit.changeIndex(index);
 
-          controller.animateToPage(
-            cubit.currentIndex,
-            duration: const Duration( milliseconds: 300 ),
-            curve: Curves.easeIn
-          );
-
+          controller.animateToPage(cubit.currentIndex,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeIn);
         },
       ),
     );
@@ -57,34 +71,49 @@ class _LastestNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
         title: const Text('News App'),
       ),
-
-      body: const SizedBox.expand(
+      body: SizedBox.expand(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              
-              SizedBox( height: 30, ),
-        
-              HomeCarousel(),
-              
-              Column(
-                children: [
-                  NewsTile(),
-                  NewsTile(),
-                  NewsTile(),
-                  NewsTile(),
-                  NewsTile(),
-                  NewsTile(),
-                  NewsTile(),
-                  NewsTile(),
-                ],
+              const SizedBox(
+                height: 30,
+              ),
+              const HomeCarousel(),
+              const SizedBox(
+                height: 5,
+              ),
+              BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+
+                  if( state is HomeLoaded ) {
+                    final data = state.data.results;
+                    return SizedBox(
+                      height: size.height * 0.5,
+                      child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: ( _, index ) {
+                          print(data[index].imageUrl);
+                          return NewsTile(
+                            title: data[index].title,
+                            description: data[index].description,
+                            imgUrl: data[index].imageUrl,
+                          );
+                        }
+                      ),
+                    );
+                  }
+
+                  return const CircularProgressIndicator();
+                  
+                },
               )
-              
             ],
           ),
         ),

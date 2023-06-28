@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'ui/screens/home/cubit/navigation_cubit.dart';
-import 'ui/utils/app_routes.dart';
+import 'ui/utils/routes/app_routes.dart';
 import 'ui/utils/app_theme.dart';
 
 void main() {

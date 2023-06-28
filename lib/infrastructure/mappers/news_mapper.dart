@@ -8,20 +8,17 @@ class NewsMapper implements Mapper {
     link: json['link'], 
     description: json['description'],
     content: json['content'],
-    pubDate: json['pubDate'],
-    sourceId: json['sourceId'],
-    country: json['country'],
+    pubDate: DateTime.parse(json['pubDate']),
+    sourceId: json['sourceId'] ?? '',
+    country: List<String>.from(json["country"].map((x) => x)),
     language: json['language'],
-    creator: json['creator'],
-    imageUrl: json['imageUrl'],
-    keywords: json['keywords'],
+    creator: List<String>.from(json["creator"] ?? []).map((String e) => e).toList(),
+    imageUrl: json['imageUrl'] ?? 'https://static.thenounproject.com/png/3674270-200.png',
+    keywords: List<String>.from(json["keywords"] ?? []).map((String e) => e).toList(),
     videoUrl: json['videoUrl']
   );
 
   @override
-  Map<String, dynamic> toMap(data) {
-    // TODO: implement toMap
-    throw UnimplementedError();
-  }
+  Map<String, dynamic> toMap(data) => throw UnimplementedError();
 
 }
