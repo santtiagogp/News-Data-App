@@ -12,7 +12,9 @@ class HomeInitial extends HomeState {}
 class HomeLoading extends HomeState {}
 
 class HomeLoaded extends HomeState {
-  final LastestNews data;
 
-  const HomeLoaded( this.data );
+  final List<News> listNews;
+  final List<News> cardNews;
+
+  const HomeLoaded( this.listNews, this.cardNews );
 }

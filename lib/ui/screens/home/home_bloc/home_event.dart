@@ -8,3 +8,5 @@ abstract class HomeEvent extends Equatable {
 }
 
 class LoadDataEvent extends HomeEvent {}
+
+class DivideCardsData extends HomeEvent {}

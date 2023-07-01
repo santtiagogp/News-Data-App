@@ -26,11 +26,11 @@ class NewsTile extends StatelessWidget {
           children: [
       
             SizedBox(
-              height: 130,
+              height: 180,
               width: 130,
               child: Image(
                 fit: BoxFit.cover,
-                image: NetworkImage(imgUrl,),
+                image: NetworkImage(imgUrl),
               ),
             ),
 
@@ -43,7 +43,7 @@ class NewsTile extends StatelessWidget {
                 children: [
             
                   Text(
-                    '${title.substring(0, 23)}...',
+                    shortTitle(title),
                     style: const TextStyle( fontSize: 20, fontWeight: FontWeight.w600 ),
                   ),
 
@@ -53,7 +53,7 @@ class NewsTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       fontSize: 13
                     ),
-                    maxLines: 5,
+                    maxLines: 4,
                   ),
 
                   const SizedBox( height: 20 ),
@@ -78,4 +78,16 @@ class NewsTile extends StatelessWidget {
       ),
     );
   }
+
+  String shortTitle( String title ) {
+
+    String txt = title;
+
+    if(txt.length < 10) {
+      return txt;
+    }
+
+    return '${txt.substring(0, 15)}...';
+  }
+
 }

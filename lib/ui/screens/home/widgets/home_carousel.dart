@@ -1,8 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../domain/entities/news_model.dart';
+
 class HomeCarousel extends StatelessWidget {
-  const HomeCarousel({super.key});
+  const HomeCarousel({
+    super.key,
+    required this.news
+  });
+
+  final List<News> news;
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +23,14 @@ class HomeCarousel extends StatelessWidget {
         itemBuilder: (context, index, realIndex) {
           return Container(
             decoration: BoxDecoration(
-              color: Colors.orange,
               borderRadius: BorderRadius.circular(10)
             ),
-            child: Center( child: Text('Index: $index') ),
+            child: Image(
+              image: NetworkImage( news[index].imageUrl ),
+            ),
           );
         },
-        itemCount: 5,
+        itemCount: news.length,
         options: CarouselOptions(
           animateToClosest: true,
           autoPlay: true,

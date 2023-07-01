@@ -1,4 +1,4 @@
-import 'package:news_app/domain/entities/latest_news_model.dart';
+import '../entities/latest_news_model.dart';
 
 abstract class NewsRepository {
 
