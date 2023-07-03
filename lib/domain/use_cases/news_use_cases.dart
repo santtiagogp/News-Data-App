@@ -1,5 +1,4 @@
 import '../entities/latest_news_model.dart';
-
 import '../repositories/news_repository.dart';
 
 class NewsUseCases {

@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import '../../ui/contants/news_api.dart';
 import 'package:http/http.dart' as http;
+
+import '../../ui/contants/news_api.dart';
 
 class ApiManager {
 

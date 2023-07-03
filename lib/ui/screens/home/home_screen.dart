@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/ui/screens/news/news_page.dart';
+import '../news/news_page.dart';
 
 import '../../../domain/use_cases/news_use_cases.dart';
 import '../saved/saved_screen.dart';
