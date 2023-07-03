@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/ui/screens/news/news_page.dart';
 
 import '../../../domain/use_cases/news_use_cases.dart';
 import '../saved/saved_screen.dart';
@@ -104,6 +105,11 @@ class _LastestNews extends StatelessWidget {
                             title: data[index].title,
                             description: data[index].description,
                             imgUrl: data[index].imageUrl,
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              NewsPage.screenName,
+                              arguments: data[index]
+                            ),
                           );
                         }
                       ),
@@ -123,9 +129,7 @@ class _LastestNews extends StatelessWidget {
 }
 
 class _HomeCarousel extends StatelessWidget {
-  const _HomeCarousel({
-    super.key,
-  });
+  const _HomeCarousel();
 
   @override
   Widget build(BuildContext context) {
