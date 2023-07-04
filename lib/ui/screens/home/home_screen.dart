@@ -105,6 +105,7 @@ class _LastestNews extends StatelessWidget {
                             title: data[index].title,
                             description: data[index].description,
                             imgUrl: data[index].imageUrl,
+                            date: data[index].pubDate,
                             onTap: () => Navigator.pushNamed(
                               context,
                               NewsPage.screenName,

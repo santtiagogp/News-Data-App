@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewsTile extends StatelessWidget {
   const NewsTile({
@@ -6,12 +7,14 @@ class NewsTile extends StatelessWidget {
     required this.title,
     required this.description,
     required this.imgUrl,
+    required this.date,
     required this.onTap
   });
 
   final String title;
   final String description;
   final String imgUrl;
+  final DateTime date;
   final VoidCallback onTap;
 
   @override
@@ -62,13 +65,13 @@ class NewsTile extends StatelessWidget {
     
                     const SizedBox( height: 20 ),
               
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
               
-                        Text('DD/MM/YYYY'),
+                        Text(formatDate(date)),
               
-                        Icon(Icons.bookmark_border)
+                        const Icon(Icons.bookmark_border)
               
                       ],
                     )
@@ -82,6 +85,13 @@ class NewsTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String formatDate( DateTime date ) {
+    final DateFormat formatter = DateFormat();
+    final String dateToString = formatter.format(date);
+    final cutString = dateToString.substring(0, 12);
+    return cutString;
   }
 
   String shortTitle( String title ) {
