@@ -13,7 +13,7 @@ class SearchScreen extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: ListView(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(15),
             children: [
 
               const NewsTextField(),
