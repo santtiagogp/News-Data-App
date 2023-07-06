@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/ui/screens/home/widgets/news_tile.dart';
+import '../home/widgets/news_tile.dart';
 
 import 'widgets/news_textfield.dart';
 
