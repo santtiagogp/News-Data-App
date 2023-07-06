@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../news/news_page.dart';
 
 import '../../../domain/use_cases/news_use_cases.dart';
+import '../news/news_page.dart';
 import '../saved/saved_screen.dart';
 import '../search/search_screen.dart';
 import '../settings/settings_screen.dart';
