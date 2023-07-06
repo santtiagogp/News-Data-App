@@ -33,8 +33,8 @@ class NewsTile extends StatelessWidget {
             children: [
         
               SizedBox(
-                height: 180,
-                width: 130,
+                height: 130,
+                width: 180,
                 child: Image(
                   fit: BoxFit.cover,
                   image: NetworkImage(imgUrl),
