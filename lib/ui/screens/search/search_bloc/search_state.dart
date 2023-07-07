@@ -8,3 +8,13 @@ abstract class SearchState extends Equatable {
 }
 
 class SearchInitial extends SearchState {}
+
+class SearchLoading extends SearchState {}
+
+class SearchDataLoaded extends SearchState {
+
+  List<News> searchData;
+
+  SearchDataLoaded( this.searchData );
+
+}
