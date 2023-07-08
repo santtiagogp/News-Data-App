@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../news/news_page.dart';
+import 'search_bloc/search_bloc.dart';
 import '../home/widgets/news_tile.dart';
 
 import 'widgets/news_textfield.dart';
@@ -8,34 +11,66 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap:() => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        body: SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.all(15),
-            children: [
 
-              const NewsTextField(),
+    final txtController = TextEditingController();
 
-              const SizedBox( height: 20 ),
+    final bloc = BlocProvider.of<SearchBloc>(context);
 
-              const Center(child: Text('35 Results:')),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+      
+            NewsTextField(
+              controller: txtController,
+              onChanged: (value)
+                => bloc.add(SearchData(value)),
+            ),
+      
+            const SizedBox(height: 20),
+            
+            BlocBuilder<SearchBloc, SearchState>(
+              builder: (context, state) {
+                
+                if( state is SearchDataLoaded ) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView.builder(
+                      itemCount: state.searchData.length,
+                      itemBuilder: (context, index) {
+                            
+                        final data = state.searchData[index];
+                            
+                        return NewsTile(
+                          title: data.title,
+                          description: data.description,
+                          imgUrl: data.imageUrl,
+                          date: data.pubDate,
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            NewsPage.screenName,
+                            arguments: data
+                          )
+                        );
+                      }
+                    ),
+                  );
+                }
 
-              const SizedBox( height: 20 ),
-
-              NewsTile(
-                title: 'Im a title wooooooooow',
-                description: 'Cillum aliqua deserunt do deserunt. Commodo ad ad aliquip occaecat adipisicing velit. Sit duis dolore amet non non. Id nulla aute ullamco sint Lorem et enim enim proident laboris. Nulla non et nulla aute dolore fugiat consequat ad. Deserunt incididunt nisi nostrud excepteur officia excepteur duis.',
-                imgUrl: 'https://media.vogue.mx/photos/5e9f0aef8966aa000859aac6/1:1/w_2264,h_2264,c_limit/como-hacer-el-peinado-de-ariana-grande.jpg',
-                date: DateTime.parse('2023-07-05 23:54:04'),
-                onTap: (){}
-              )
-
-            ],
-          ),
-        )
-      ),
+                if( state is SearchInitial ) {
+                  return Center(child: Text('initial'));
+                }
+            
+                return const CircularProgressIndicator();
+            
+              }
+            )
+      
+          ],
+        ),
+      )
     );
   }
+
 }

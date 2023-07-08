@@ -7,7 +7,7 @@ class NewsMapper implements Mapper {
     title: json['title'],
     link: json['link'], 
     description: json['description'] ?? 'No description',
-    content: json['content'],
+    content: json['content'] ?? 'Empty news',
     pubDate: DateTime.parse(json['pubDate']),
     sourceId: json['sourceId'] ?? '',
     country: List<String>.from(json["country"].map((x) => x)),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/ui/screens/search/search_bloc/search_bloc.dart';
 
 import '../../../domain/use_cases/news_use_cases.dart';
 import '../news/news_page.dart';
@@ -24,9 +25,13 @@ class HomeScreen extends StatelessWidget {
 
     PageController controller = PageController(initialPage: cubit.currentIndex);
 
-    return BlocProvider(
-      create: (_) => HomeBloc(useCases)
-        ..add(LoadDataEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => HomeBloc(useCases)
+        ..add(LoadDataEvent())),
+
+        BlocProvider(create: (_) => SearchBloc(useCases))
+      ],
       child: _HomePageHeader(controller: controller, cubit: cubit),
     );
   }

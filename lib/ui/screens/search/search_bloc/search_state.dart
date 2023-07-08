@@ -13,8 +13,8 @@ class SearchLoading extends SearchState {}
 
 class SearchDataLoaded extends SearchState {
 
-  List<News> searchData;
+  final List<News> searchData;
 
-  SearchDataLoaded( this.searchData );
+  const SearchDataLoaded( this.searchData );
 
 }

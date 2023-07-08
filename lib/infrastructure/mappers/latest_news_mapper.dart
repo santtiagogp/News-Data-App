@@ -9,7 +9,7 @@ class NewsApiRespMapper implements Mapper {
     status: json['status'],
     totalResults: json['totalResults'],
     results: List<News>.from(json["results"].map((x) => NewsMapper().fromMap(x))),
-    nextPage: json['nextPage']
+    nextPage: json['nextPage'] ?? ''
   );
 
   @override
