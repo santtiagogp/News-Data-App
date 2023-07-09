@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../home/widgets/news_tile.dart';
+import '../../../domain/entities/news_model.dart';
 import '../news/news_page.dart';
+import '../home/widgets/news_tile.dart';
+import 'widgets/empty_search_widget.dart';
+
 import 'search_bloc/search_bloc.dart';
 import 'widgets/news_textfield.dart';
 
@@ -17,60 +19,85 @@ class SearchScreen extends StatelessWidget {
     final bloc = BlocProvider.of<SearchBloc>(context);
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+      body: Column(
           children: [
-      
-            NewsTextField(
-              controller: txtController,
-              onSubmitted: (value)
-                => bloc.add(SearchData(value)),
+            Padding(
+              padding: const EdgeInsets.symmetric( horizontal: 20 ),
+              child: NewsTextField(
+                controller: txtController,
+                onSubmitted: ( value ) => bloc.add(SearchData(value)),
+              ),
             ),
-      
-            const SizedBox(height: 20),
             
             BlocBuilder<SearchBloc, SearchState>(
-              builder: (context, state) {
-                
-                if( state is SearchDataLoaded ) {
-                  return SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.builder(
-                      itemCount: state.searchData.length,
-                      itemBuilder: (context, index) {
-                            
-                        final data = state.searchData[index];
-                            
-                        return NewsTile(
-                          title: data.title,
-                          description: data.description,
-                          imgUrl: data.imageUrl,
-                          date: data.pubDate,
-                          onTap: () => Navigator.pushNamed(
-                            context,
-                            NewsPage.screenName,
-                            arguments: data
-                          )
-                        );
-                      }
+              builder: ( context, state ) {
+            
+                if( state is SearchLoading ) {
+                  return const Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
                     ),
                   );
                 }
+            
+                if( state is SearchDataLoaded ) {
+            
+                  final data = state.searchData;
+                  
+                  return Expanded(
+                    child: Column(
+                      children: [
 
-                if( state is SearchInitial ) {
-                  return Center(child: Text('initial'));
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 20),
+                          child: Text(
+                            'Results: ${data.length}',
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+
+                        Expanded(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.all(0),
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return NewsTile(
+                                title: data[index].title,
+                                description: data[index].description,
+                                imgUrl: data[index].imageUrl,
+                                date: data[index].pubDate,
+                                onTap: () => navigateToNews(
+                                  context,
+                                  data[index],
+                                  NewsPage.screenName
+                                )
+                              );
+                            }
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 }
             
-                return const CircularProgressIndicator();
+                return const InitialSearch();
             
               }
             )
-      
+            
           ],
         ),
-      )
     );
   }
+
+  void navigateToNews( BuildContext context, News news, String routeName ) =>
+    Navigator.pushNamed(
+      context,
+      routeName,
+      arguments: news
+    );
 
 }

@@ -15,11 +15,19 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     on<SearchData>((event, emit) async {
       
-      emit(SearchLoading());
+      if( event.query.isEmpty ) {
 
-      final response = await _useCases.searchNews( event.query );
+        emit(SearchInitial());
 
-      emit(SearchDataLoaded( response ));
+      } else {
+
+        emit(SearchLoading());
+
+        final response = await _useCases.searchNews( event.query );
+
+        emit(SearchDataLoaded( response ));
+
+      }
 
     });
 
