@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../home/widgets/news_tile.dart';
 import '../news/news_page.dart';
 import 'search_bloc/search_bloc.dart';
-import '../home/widgets/news_tile.dart';
-
 import 'widgets/news_textfield.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -23,7 +23,7 @@ class SearchScreen extends StatelessWidget {
       
             NewsTextField(
               controller: txtController,
-              onChanged: (value)
+              onSubmitted: (value)
                 => bloc.add(SearchData(value)),
             ),
       

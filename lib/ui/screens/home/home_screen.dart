@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/ui/screens/search/search_bloc/search_bloc.dart';
+import '../search/search_bloc/search_bloc.dart';
 
 import '../../../domain/use_cases/news_use_cases.dart';
 import '../news/news_page.dart';

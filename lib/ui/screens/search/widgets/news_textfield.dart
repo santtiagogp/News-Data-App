@@ -4,11 +4,11 @@ class NewsTextField extends StatelessWidget {
   const NewsTextField({
     super.key,
     required this.controller,
-    required this.onChanged
+    required this.onSubmitted
   });
 
   final TextEditingController controller;
-  final ValueChanged<String> onChanged;
+  final Function(String) onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class NewsTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
           )
         ),
-        onChanged: onChanged,
+        onSubmitted: onSubmitted,
       ),
     );
   }
