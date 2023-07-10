@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'widgets/home_carousel_image.dart';
+import '../../utils/helpers/news_navigator.dart';
 import '../search/search_bloc/search_bloc.dart';
 
 import '../../../domain/use_cases/news_use_cases.dart';
@@ -144,7 +146,20 @@ class _HomeCarousel extends StatelessWidget {
 
         if( state is HomeLoaded ) {
           return HomeCarousel(
-            news: state.cardNews,
+            itemCount: state.cardNews.length,
+            itemBuilder: (_, index, __) {
+              return InkWell(
+                onTap: () => Helpers.navigateToNews(
+                  context,
+                  state.cardNews[index],
+                  NewsPage.screenName
+                ),
+                child: HomeCarouselImage(
+                  imageUrl: state.cardNews[index].imageUrl,
+                  title: state.cardNews[index].title,
+                ),
+              );
+            },
           );
         }
 

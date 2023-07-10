@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/entities/news_model.dart';
-import '../news/news_page.dart';
-import '../home/widgets/news_tile.dart';
-import 'widgets/empty_search_widget.dart';
 
+import '../../utils/helpers/news_navigator.dart';
+import '../home/widgets/news_tile.dart';
+import '../news/news_page.dart';
 import 'search_bloc/search_bloc.dart';
+import 'widgets/empty_search_widget.dart';
 import 'widgets/news_textfield.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -69,7 +69,8 @@ class SearchScreen extends StatelessWidget {
                                 description: data[index].description,
                                 imgUrl: data[index].imageUrl,
                                 date: data[index].pubDate,
-                                onTap: () => navigateToNews(
+                                onTap: () => Helpers.navigateToNews(
+                                  
                                   context,
                                   data[index],
                                   NewsPage.screenName
@@ -92,12 +93,5 @@ class SearchScreen extends StatelessWidget {
         ),
     );
   }
-
-  void navigateToNews( BuildContext context, News news, String routeName ) =>
-    Navigator.pushNamed(
-      context,
-      routeName,
-      arguments: news
-    );
 
 }

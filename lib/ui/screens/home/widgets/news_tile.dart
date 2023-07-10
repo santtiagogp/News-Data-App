@@ -19,6 +19,9 @@ class NewsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+
     return InkWell(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
@@ -35,8 +38,8 @@ class NewsTile extends StatelessWidget {
             children: [
         
               SizedBox(
-                height: 130,
-                width: 180,
+                height: size.height * 0.2,
+                width: size.width * 0.4,
                 child: Image(
                   fit: BoxFit.cover,
                   image: NetworkImage(imgUrl),
@@ -52,8 +55,13 @@ class NewsTile extends StatelessWidget {
                   children: [
               
                     Text(
-                      shortTitle(title),
-                      style: const TextStyle( fontSize: 20, fontWeight: FontWeight.w600 ),
+                      title,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        overflow: TextOverflow.ellipsis
+                      ),
+                      maxLines: 2,
                     ),
     
                     Text(
@@ -94,17 +102,6 @@ class NewsTile extends StatelessWidget {
     final String dateToString = formatter.format(date);
     final cutString = dateToString.substring(0, 12);
     return cutString;
-  }
-
-  String shortTitle( String title ) {
-
-    String txt = title;
-
-    if(txt.length < 10) {
-      return txt;
-    }
-
-    return '${txt.substring(0, 15)}...';
   }
 
 }
