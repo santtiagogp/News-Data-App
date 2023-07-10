@@ -42,16 +42,22 @@ class HomeCarouselImage extends StatelessWidget {
             ),
           ),
 
-          Positioned(
-            bottom: 20,
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                overflow: TextOverflow.ellipsis
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 20
               ),
-              maxLines: 1,
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  overflow: TextOverflow.ellipsis
+                ),
+                maxLines: 1,
+              ),
             ),
           )
 
