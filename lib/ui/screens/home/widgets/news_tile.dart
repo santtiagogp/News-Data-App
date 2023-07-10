@@ -5,14 +5,12 @@ class NewsTile extends StatelessWidget {
   const NewsTile({
     super.key,
     required this.title,
-    required this.description,
     required this.imgUrl,
     required this.date,
     required this.onTap
   });
 
   final String title;
-  final String description;
   final String imgUrl;
   final DateTime date;
   final VoidCallback onTap;
@@ -24,77 +22,75 @@ class NewsTile extends StatelessWidget {
 
     return InkWell(
       splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
+      focusColor: Colors.transparent,
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15)
+        margin: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 20
         ),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            children: [
-        
-              SizedBox(
-                height: size.height * 0.2,
-                width: size.width * 0.4,
-                child: Image(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(imgUrl),
-                ),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(20)
+        ),
+        child: Row(
+          children: [
+    
+            Container(
+              width: size.height * 0.15,
+              height: size.height * 0.15,
+              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(imgUrl, fit: BoxFit.cover)
               ),
+            ),
     
-              const SizedBox( width: 20, ),
-        
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-              
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        overflow: TextOverflow.ellipsis
-                      ),
-                      maxLines: 2,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+    
+                SizedBox(
+                  height: size.height * 0.1,
+                  width: size.width * 0.5,
+                  child: Text(
+                    title,
+                    maxLines: 2,
+                    style: const TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
                     ),
-    
-                    Text(
-                      description,
-                      style: const TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        fontSize: 13
-                      ),
-                      maxLines: 4,
-                    ),
-    
-                    const SizedBox( height: 20 ),
-              
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-              
-                        Text(formatDate(date)),
-              
-                        const Icon(Icons.bookmark_border)
-              
-                      ],
-                    )
-              
-                  ],
+                  ),
                 ),
-              )
-        
-            ],
-          ),
+    
+                SizedBox(
+                  width: size.width * 0.5,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                              
+                      Text(
+                        formatDate(date)
+                      ),
+                              
+                      const Icon(
+                        Icons.bookmark_border
+                      )
+                              
+                    ],
+                  ),
+                )
+    
+              ],
+            )
+    
+          ],
         ),
       ),
     );
+
   }
 
   String formatDate( DateTime date ) {

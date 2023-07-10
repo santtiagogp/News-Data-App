@@ -13,16 +13,17 @@ class HomeCarouselImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final size = MediaQuery.of(context).size;
-
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Stack(
         children: [
     
-          Image.network(
-            imageUrl,
-            fit: BoxFit.cover,
+          Align(
+            alignment: Alignment.center,
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+            ),
           ),
     
           Container(
