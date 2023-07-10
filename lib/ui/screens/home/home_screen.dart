@@ -110,6 +110,7 @@ class _LastestNews extends StatelessWidget {
                         itemBuilder: ( _, index ) {
                           return NewsTile(
                             title: data[index].title,
+                            description: data[index].description,
                             imgUrl: data[index].imageUrl,
                             date: data[index].pubDate,
                             onTap: () => Navigator.pushNamed(

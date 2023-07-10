@@ -66,6 +66,7 @@ class SearchScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return NewsTile(
                                 title: data[index].title,
+                                description: data[index].description,
                                 imgUrl: data[index].imageUrl,
                                 date: data[index].pubDate,
                                 onTap: () => Helpers.navigateToNews(

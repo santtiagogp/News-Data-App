@@ -5,12 +5,14 @@ class NewsTile extends StatelessWidget {
   const NewsTile({
     super.key,
     required this.title,
+    required this.description,
     required this.imgUrl,
     required this.date,
     required this.onTap
   });
 
   final String title;
+  final String description;
   final String imgUrl;
   final DateTime date;
   final VoidCallback onTap;
@@ -22,7 +24,7 @@ class NewsTile extends StatelessWidget {
 
     return InkWell(
       splashColor: Colors.transparent,
-      focusColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(
@@ -48,24 +50,37 @@ class NewsTile extends StatelessWidget {
     
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
     
-                SizedBox(
-                  height: size.height * 0.1,
+                Container(
+                  margin: const EdgeInsets.symmetric( vertical: 10 ),
                   width: size.width * 0.5,
                   child: Text(
                     title,
                     maxLines: 2,
                     style: const TextStyle(
                       overflow: TextOverflow.ellipsis,
-                      fontSize: 15,
+                      fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
-    
+
                 SizedBox(
+                  width: size.width * 0.5,
+                  child: Text(
+                    description,
+                    maxLines: 3,
+                    style: const TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+    
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
                   width: size.width * 0.5,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
