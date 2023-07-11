@@ -7,4 +7,6 @@ abstract class NewsRepository {
 
   Future<List<News>> searchNews( String query );
 
+  void saveNews( News news );
+
 }

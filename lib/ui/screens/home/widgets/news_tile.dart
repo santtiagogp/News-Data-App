@@ -8,7 +8,9 @@ class NewsTile extends StatelessWidget {
     required this.description,
     required this.imgUrl,
     required this.date,
-    required this.onTap
+    required this.onTap,
+    required this.onIconTap,
+    this.buttonIcon = Icons.bookmark_border,
   });
 
   final String title;
@@ -16,6 +18,8 @@ class NewsTile extends StatelessWidget {
   final String imgUrl;
   final DateTime date;
   final VoidCallback onTap;
+  final IconData buttonIcon;
+  final VoidCallback onIconTap;
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +94,9 @@ class NewsTile extends StatelessWidget {
                         formatDate(date)
                       ),
                               
-                      const Icon(
-                        Icons.bookmark_border
+                      IconButton(
+                        onPressed: onIconTap,
+                        icon: const Icon(Icons.bookmark_border)
                       )
                               
                     ],

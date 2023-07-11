@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'widgets/home_carousel_image.dart';
-import '../../utils/helpers/news_navigator.dart';
-import '../search/search_bloc/search_bloc.dart';
+import 'package:news_app/ui/screens/saved/saved_bloc/saved_bloc.dart';
 
 import '../../../domain/use_cases/news_use_cases.dart';
+import '../../utils/helpers/news_navigator.dart';
 import '../news/news_page.dart';
 import '../saved/saved_screen.dart';
+import '../search/search_bloc/search_bloc.dart';
 import '../search/search_screen.dart';
 import '../settings/settings_screen.dart';
 import 'cubit/navigation_cubit.dart';
 import 'home_bloc/home_bloc.dart';
 import 'widgets/home_carousel.dart';
+import 'widgets/home_carousel_image.dart';
 import 'widgets/home_navbar.dart';
 import 'widgets/news_tile.dart';
 
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => HomeBloc(useCases)
         ..add(LoadDataEvent())),
-
+        BlocProvider(create: (_) => SavedBloc(useCases)),
         BlocProvider(create: (_) => SearchBloc(useCases))
       ],
       child: _HomePageHeader(controller: controller, cubit: cubit),
@@ -82,6 +83,8 @@ class _LastestNews extends StatelessWidget {
 
     final size = MediaQuery.of(context).size;
 
+    final bloc = BlocProvider.of<SavedBloc>(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -108,11 +111,18 @@ class _LastestNews extends StatelessWidget {
                       child: ListView.builder(
                         itemCount: data.length,
                         itemBuilder: ( _, index ) {
+
+                          final news = state.cardNews[index];
+
                           return NewsTile(
+
                             title: data[index].title,
                             description: data[index].description,
                             imgUrl: data[index].imageUrl,
                             date: data[index].pubDate,
+                            onIconTap:() => bloc.add(SaveNewsEvent(news)),
+                            buttonIcon: data[index].saved ? 
+                              Icons.bookmark : Icons.bookmark_border,
                             onTap: () => Navigator.pushNamed(
                               context,
                               NewsPage.screenName,

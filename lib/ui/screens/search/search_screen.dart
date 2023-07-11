@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/ui/screens/saved/saved_bloc/saved_bloc.dart';
 
 import '../../utils/helpers/news_navigator.dart';
 import '../home/widgets/news_tile.dart';
@@ -17,6 +18,8 @@ class SearchScreen extends StatelessWidget {
     final txtController = TextEditingController();
 
     final bloc = BlocProvider.of<SearchBloc>(context);
+
+    final savedBloc = BlocProvider.of<SavedBloc>(context);
 
     return Scaffold(
       body: Column(
@@ -69,8 +72,10 @@ class SearchScreen extends StatelessWidget {
                                 description: data[index].description,
                                 imgUrl: data[index].imageUrl,
                                 date: data[index].pubDate,
+                                onIconTap: () => savedBloc.add(SaveNewsEvent(data[index])),
+                                buttonIcon: data[index].saved ? 
+                                  Icons.bookmark : Icons.bookmark_border,
                                 onTap: () => Helpers.navigateToNews(
-                                  
                                   context,
                                   data[index],
                                   NewsPage.screenName

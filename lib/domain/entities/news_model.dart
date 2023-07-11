@@ -11,6 +11,7 @@ class News {
     final String sourceId;
     final List<String> country;
     final String language;
+    bool saved;
 
     News({
         required this.title,
@@ -25,6 +26,7 @@ class News {
         required this.sourceId,
         required this.country,
         required this.language,
+        this.saved = false
     });
 
 }

@@ -1,7 +1,7 @@
 import '../../domain/entities/news_model.dart';
 import '../../ui/interfaces/mapper.dart';
 
-class NewsMapper implements Mapper {
+class NewsMapper implements Mapper<News> {
   @override
   fromMap(Map<String, dynamic> json) => News(
     title: json['title'],
@@ -19,6 +19,18 @@ class NewsMapper implements Mapper {
   );
 
   @override
-  Map<String, dynamic> toMap(data) => throw UnimplementedError();
+  Map<String, dynamic> toMap(News news) => {
+    'title' : news.title,
+    'link' : news.link,
+    'description' : news.description,
+    'content' : news.content,
+    'pubDate' : news.pubDate,
+    'sourceId' : news.sourceId,
+    'country' : news.country,
+    'language' : news.language,
+    'creator' : news.creator,
+    'image_url' : news.imageUrl,
+    'keywords' : news.keywords 
+  };
 
 }

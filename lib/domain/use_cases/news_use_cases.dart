@@ -13,4 +13,6 @@ class NewsUseCases {
   Future<List<News>> searchNews( String query )
     => _newsRepository.searchNews(query);
 
+  void saveNews( News news ) => _newsRepository.saveNews(news);
+
 }
