@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:news_app/infrastructure/mappers/news_mapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../mappers/news_mapper.dart';
 
 import '../../domain/entities/latest_news_model.dart';
 import '../../domain/entities/news_model.dart';
@@ -17,11 +17,7 @@ class NewsApiRepository extends NewsRepository{
 
   final _apiManager = ApiManager();
   late SharedPreferences prefs;
-  Map<String, List<News>> savedNews = {
-    "news" : [
-
-    ]
-  };
+  Map<String, List<News>> savedNews = {"news" : []};
 
   @override
   Future<LastestNews> getLastestNews() async {

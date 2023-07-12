@@ -15,9 +15,14 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
 
     on<SaveNewsEvent>((event, emit) {
 
-      _useCases.saveNews(event.news);
+      event.news.saved ? false : true;
 
-      event.news.saved = true;
+      if( event.news.saved ) {
+        return;
+      } else {
+        _useCases.saveNews(event.news);
+      }
+
 
     });
 
