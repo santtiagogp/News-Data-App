@@ -24,7 +24,7 @@ class NewsMapper implements Mapper<News> {
     'link' : news.link,
     'description' : news.description,
     'content' : news.content,
-    'pubDate' : news.pubDate,
+    'pubDate' : news.pubDate.toString(),
     'sourceId' : news.sourceId,
     'country' : news.country,
     'language' : news.language,

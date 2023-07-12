@@ -55,20 +55,37 @@ class NewsApiRepository extends NewsRepository{
     if(prefs.getString('saved_news') != null) {
       final stringData = prefs.getString('saved_news');
 
-      Map<String, List<News>> decodedData = jsonDecode(stringData.toString());
+      Map<String, dynamic> decodedData = jsonDecode(stringData.toString());
 
-      savedNews = decodedData;
+      List<News> newsList = List<News>.from(
+        decodedData["news"].map((x) => NewsMapper().fromMap(x))
+      );
+
+      Map<String, List<News>> mapNewsData = {};
+
+      mapNewsData["news"] = newsList;
+
+      savedNews = mapNewsData;
+
     }
 
     savedNews['news']!.add(news);
 
-    Map<String, dynamic> data = {};
+    List<Map<String, dynamic>> newsList = List.empty( growable: true );
 
-    data['news'] = savedNews['news'];
+    Map<String, dynamic> newsData = {};
 
-    print(data);
+    for (News element in savedNews['news']!) {
 
-    //await prefs.setString('saved_news', jsonEncode(savedNews));
+      final Map<String, dynamic> jsonNews = NewsMapper().toMap(element);
+
+      newsList.add(jsonNews);
+
+    }
+
+    newsData['news'] = newsList;
+
+    await prefs.setString('saved_news', jsonEncode(newsData));
     
   }
 
