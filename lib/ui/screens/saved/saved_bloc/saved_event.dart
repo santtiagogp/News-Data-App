@@ -15,4 +15,3 @@ class SaveNewsEvent extends SavedEvent{
 
 class LoadSavedNewsEvent extends SavedEvent {}
 
-

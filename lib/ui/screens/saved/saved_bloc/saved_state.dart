@@ -14,3 +14,5 @@ class SavedNews extends SavedState {
 
   const SavedNews( this.news );
 }
+
+class LoadingNews extends SavedState {}

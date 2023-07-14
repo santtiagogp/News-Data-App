@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -27,9 +26,13 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
 
     });
 
-    on<LoadSavedNewsEvent>((event, emit) {
+    on<LoadSavedNewsEvent>((event, emit) async {
 
-      
+      emit( LoadingNews() );
+
+      final news = await _useCases.getSavedNews();
+
+      emit(SavedNews(news));
 
     });
 
