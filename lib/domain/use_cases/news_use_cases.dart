@@ -15,4 +15,6 @@ class NewsUseCases {
 
   void saveNews( News news ) => _newsRepository.saveNews(news);
 
+  Future<List<News>> getSavedNews() => _newsRepository.getSavedNews();
+
 }

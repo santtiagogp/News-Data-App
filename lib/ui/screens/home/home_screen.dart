@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../domain/use_cases/news_use_cases.dart';
 import '../../utils/helpers/news_navigator.dart';
@@ -16,11 +17,25 @@ import 'widgets/home_carousel_image.dart';
 import 'widgets/home_navbar.dart';
 import 'widgets/news_tile.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.useCases});
 
   static const String screenName = 'home';
   final NewsUseCases useCases;
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  late final SharedPreferences prefs;
+
+  @override
+  void initState() {
+    initializeSharedPreferences();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +45,19 @@ class HomeScreen extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => HomeBloc(useCases)
+        BlocProvider(create: (_) => HomeBloc(widget.useCases)
         ..add(LoadDataEvent())),
-        BlocProvider(create: (_) => SavedBloc(useCases)),
-        BlocProvider(create: (_) => SearchBloc(useCases))
+        BlocProvider(create: (_) => SavedBloc(widget.useCases)
+        ..add(LoadSavedNewsEvent())),
+        BlocProvider(create: (_) => SearchBloc(widget.useCases))
       ],
       child: _HomePageHeader(controller: controller, cubit: cubit),
     );
   }
+
+  void initializeSharedPreferences() async
+    => prefs = await SharedPreferences.getInstance();
+
 }
 
 class _HomePageHeader extends StatelessWidget {

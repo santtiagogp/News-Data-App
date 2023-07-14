@@ -9,4 +9,6 @@ abstract class NewsRepository {
 
   void saveNews( News news );
 
+  Future<List<News>> getSavedNews();
+
 }

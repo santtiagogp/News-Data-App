@@ -13,4 +13,6 @@ class SaveNewsEvent extends SavedEvent{
   const SaveNewsEvent( this.news );
 }
 
+class LoadSavedNewsEvent extends SavedEvent {}
+
 

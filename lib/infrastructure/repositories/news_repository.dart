@@ -11,12 +11,10 @@ import '../resp_api/api_manager.dart';
 
 class NewsApiRepository extends NewsRepository{
 
-  NewsApiRepository() {
-    initializeSharedPrefs();
-  }
+  NewsApiRepository();
 
   final _apiManager = ApiManager();
-  late SharedPreferences prefs;
+  static const String key = "saved_news";
   Map<String, List<News>> savedNews = {"news" : []};
 
   @override
@@ -48,8 +46,10 @@ class NewsApiRepository extends NewsRepository{
   @override
   void saveNews(News news) async {
 
-    if(prefs.getString('saved_news') != null) {
-      final stringData = prefs.getString('saved_news');
+    final prefs = await SharedPreferences.getInstance();
+
+    if(prefs.getString(key) != null) {
+      final stringData = prefs.getString(key);
 
       Map<String, dynamic> decodedData = jsonDecode(stringData.toString());
 
@@ -81,12 +81,28 @@ class NewsApiRepository extends NewsRepository{
 
     newsData['news'] = newsList;
 
-    await prefs.setString('saved_news', jsonEncode(newsData));
+    await prefs.setString(key, jsonEncode(newsData));
     
   }
 
-  void initializeSharedPrefs() async {
-    prefs = await SharedPreferences.getInstance();
+  @override
+  Future<List<News>> getSavedNews() async {
+
+    final prefs = await SharedPreferences.getInstance();
+
+    final codedData = prefs.getString(key);
+
+    Map<String, dynamic> decodedData = jsonDecode(codedData.toString());
+
+    List<News> newsList = List<News>.from(
+        decodedData["news"].map((x) => NewsMapper().fromMap(x))
+    );
+
+    return await Future.delayed(
+      Duration.zero,
+      () => newsList
+    );
+
   }
 
 }
