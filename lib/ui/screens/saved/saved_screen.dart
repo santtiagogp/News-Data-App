@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/ui/screens/home/widgets/news_tile.dart';
 import 'package:news_app/ui/screens/saved/saved_bloc/saved_bloc.dart';
 
+import 'widgets/initial_saved_screen.dart';
+
 class SavedScreen extends StatelessWidget {
   const SavedScreen({super.key});
 
@@ -25,6 +27,10 @@ class SavedScreen extends StatelessWidget {
         },
         child: BlocBuilder<SavedBloc, SavedState>(
           builder: (context, state) {
+
+            if( state is SavedInitial ) {
+              return const InitialSavedScreen();
+            }
       
             if( state is SavedNews ) {
               return ListView.builder(

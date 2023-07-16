@@ -32,7 +32,7 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
 
       final news = await _useCases.getSavedNews();
 
-      emit(SavedNews(news));
+      news.isNotEmpty ? emit(SavedNews(news)) : emit(SavedInitial());
 
     });
 
