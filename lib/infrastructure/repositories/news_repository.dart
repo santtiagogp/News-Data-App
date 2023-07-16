@@ -90,18 +90,41 @@ class NewsApiRepository extends NewsRepository{
 
     final prefs = await SharedPreferences.getInstance();
 
-    final codedData = prefs.getString(key);
+    final List<News> savedNewsData = List.empty( growable: true );
 
-    Map<String, dynamic> decodedData = jsonDecode(codedData.toString());
+    if( prefs.getString(key) == null ) {
+      
+      Map<String, dynamic> data = {
+        "news" : []
+      };
 
-    List<News> newsList = List<News>.from(
-        decodedData["news"].map((x) => NewsMapper().fromMap(x))
-    );
+      prefs.setString(key, jsonEncode(data));
 
-    return await Future.delayed(
-      Duration.zero,
-      () => newsList
-    );
+      return await Future.delayed(
+        Duration.zero,
+        () => savedNewsData
+      );
+
+    } else {
+
+      final codedData = prefs.getString(key);
+
+      final Map<String, dynamic> decodedData = jsonDecode(codedData.toString());
+
+      for (Map<String, dynamic> news in decodedData['news']) {
+        
+        final mappedData = NewsMapper().fromMap(news);
+
+        savedNewsData.add(mappedData);
+
+      }
+
+      return await Future.delayed(
+        Duration.zero,
+        () => savedNewsData
+      );
+
+    }
 
   }
 

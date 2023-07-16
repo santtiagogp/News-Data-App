@@ -8,36 +8,47 @@ class SavedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final bloc = BlocProvider.of<SavedBloc>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Saved News'),
         centerTitle: false,
       ),
-      body: BlocBuilder<SavedBloc, SavedState>(
-        builder: (context, state) {
-
-          if( state is SavedNews ) {
-            return ListView.builder(
-              itemCount: state.news.length,
-              itemBuilder: (context, index) {
-
-                final news = state.news[index];
-
-                return NewsTile(
-                  title: news.title,
-                  description: news.description,
-                  imgUrl: news.imageUrl,
-                  date: news.pubDate,
-                  onTap: (){},
-                  onIconTap: (){}
-                );
-              },
-            );
-          }
-
-          return const Center(child: CircularProgressIndicator());
-
+      body: RefreshIndicator(
+        onRefresh: (){
+          return Future.delayed(
+            Duration.zero,
+            () => bloc.add(LoadSavedNewsEvent())
+          );
         },
+        child: BlocBuilder<SavedBloc, SavedState>(
+          builder: (context, state) {
+      
+            if( state is SavedNews ) {
+              return ListView.builder(
+                itemCount: state.news.length,
+                itemBuilder: (context, index) {
+      
+                  final news = state.news[index];
+      
+                  return NewsTile(
+                    title: news.title,
+                    description: news.description,
+                    imgUrl: news.imageUrl,
+                    date: news.pubDate,
+                    onTap: (){},
+                    onIconTap: (){}
+                  );
+                },
+              );
+            }
+      
+            return const Center(child: CircularProgressIndicator());
+      
+          },
+        ),
       ),
     );
   }
